@@ -1,10 +1,11 @@
 import streamlit as st
 import google.generativeai as genai
-st.title("🐧 My chatbot app")
+
+st.title("🐧 My chatbot app 🐧")
 st.subheader("Conversation")
 
 # Capture Gemini API Key
-gemini_api_key = st.text_input("Gemini API Key: ", placeholder="Type your API Keyhere...", type="password")
+gemini_api_key = st.text_input("Gemini API Key: ", placeholder="Type your API Key here...", type="password")
 
 # Initialize the Gemini Model
 if gemini_api_key:
@@ -25,16 +26,17 @@ for role, message in st.session_state.chat_history:
     st.chat_message(role).markdown(message)
 
 # Capture user input and generate bot response
-    if user_input := st.chat_input("Type your message here..."):
-        # Store and display user message
-        st.session_state.chat_history.append(("user", user_input))
-        st.chat_message("user").markdown(user_input)
-    
+if user_input := st.chat_input("Type your message here..."):
+    # Store and display user message
+    st.session_state.chat_history.append(("user", user_input))
+    st.chat_message("user").markdown(user_input)
+
     # Use Gemini AI to generate a bot response
     if model:
         try:
             response = model.generate_content(user_input)
             bot_response = response.text
+            
             # Store and display the bot response
             st.session_state.chat_history.append(("assistant", bot_response))
             st.chat_message("assistant").markdown(bot_response)
